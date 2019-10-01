@@ -4,7 +4,6 @@ windowSize(1000, 600)
 canvasSize(1000, 600)
 
 
-
 def ellipse(a, b, x0, y0):
     x = a
     y = 0
@@ -38,6 +37,7 @@ def man(a, b):
     line(a - 25, b + 200, a - 65, b + 330)
     line(a - 65, b + 330, a - 100, b + 330)
 
+
 def woman(a, b):
     penColor(233, 99, 233)
     brushColor(233, 99, 233)
@@ -55,10 +55,11 @@ def woman(a, b):
     line(a + 12, b + 60, a + 50, b + 100)
     line(a + 50, b + 100, a + 120, b + 65)
     line(a - 12, b + 60, a - 82, b + 140)
+
+
 def mirror ()
 man(200,100)
 woman(360,100)
-
 
 
 run()
