@@ -79,7 +79,7 @@ def woman(a, b):
     line(a + 12, b + 60, a + 50, b + 100)
     line(a + 50, b + 100, a + 120, b + 65)
     line(a - 12, b + 60, a - 82, b + 140)
-    
+
 
 brushColor(80, 230, 230)
 rectangle(0, 0, 600, 250)
