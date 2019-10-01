@@ -36,6 +36,15 @@ def man(a, b):
     line(a + 45, b + 330, a + 65, b + 330)
     line(a - 25, b + 200, a - 65, b + 330)
     line(a - 65, b + 330, a - 100, b + 330)
+    
+    
+def heart(a, b):
+    line(a, b, a + 20, b - 80)
+    penColor(255, 0, 0)
+    brushColor(255, 0, 0)
+    polygon([(a + 20, b - 80), (a + 7, b - 140), (a + 62, b - 120), (a + 20, b - 80)])
+    circle(a + 25, b - 135, 18)
+    circle(a + 47, b - 128, 18)
 
 
 def woman(a, b):
