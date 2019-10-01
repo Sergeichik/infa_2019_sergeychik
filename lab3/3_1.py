@@ -36,8 +36,8 @@ def man(a, b):
     line(a + 45, b + 330, a + 65, b + 330)
     line(a - 25, b + 200, a - 65, b + 330)
     line(a - 65, b + 330, a - 100, b + 330)
-    
-    
+
+
 def ice_cream(a, b):
     penColor(255, 215, 0)
     brushColor(255, 215, 0)
@@ -51,8 +51,8 @@ def ice_cream(a, b):
     penColor(255, 255, 255)
     brushColor(255, 255, 255)
     ellipse(15, 12, a - 49, b - 88)
-    
-    
+
+
 def heart(a, b):
     line(a, b, a + 20, b - 80)
     penColor(255, 0, 0)
@@ -80,6 +80,7 @@ def woman(a, b):
     line(a + 50, b + 100, a + 120, b + 65)
     line(a - 12, b + 60, a - 82, b + 140)
     
+
 brushColor(80, 230, 230)
 rectangle(0, 0, 600, 250)
 brushColor(0, 128, 85)
