@@ -76,7 +76,7 @@ def mirorwoman(a, b):
     line(a + 12, b + 60, a + 82, b + 140)
 
 
-def heart(a,b):
+def heart(a, b):
     line(a, b, a - 20, b - 80)
     penColor(255, 0, 0)
     brushColor(255, 0, 0)
@@ -99,9 +99,10 @@ def ice_cream(a, b):
     brushColor(255, 255, 255)
     ellipse(15, 12, a + 49, b - 88)
 
-brushColor(80,230,230)
+
+brushColor(80, 230, 230)
 rectangle(0, 0, 1000, 250)
-brushColor(0,128,85)
+brushColor(0, 128, 85)
 rectangle(0, 250, 1000, 600)
 man(200, 200)
 woman(360, 200)
