@@ -1,7 +1,7 @@
 from graph import windowSize, canvasSize, polygon, brushColor, rectangle, penColor, circle, line, run
 
-windowSize(1000, 600)
-canvasSize(1000, 600)
+windowSize(600, 600)
+canvasSize(600, 600)
 
 
 def ellipse(a, b, x0, y0):
@@ -81,5 +81,8 @@ def woman(a, b):
     line(a - 12, b + 60, a - 82, b + 140)
     
 
-    
+man()
+woman()
+heart()
+ice_cream()
 run()
