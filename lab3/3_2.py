@@ -76,7 +76,11 @@ def mirorwoman(a, b):
     line(a + 12, b + 60, a + 82, b + 140)
 
 
+<<<<<<< HEAD
 def heart(a,b):
+=======
+def heart(a, b):
+>>>>>>> 749fe181cb440d0c04df4e34acf3c0f77f68ba70
     line(a, b, a - 20, b - 80)
     penColor(255, 0, 0)
     brushColor(255, 0, 0)
@@ -98,10 +102,18 @@ def ice_cream(a, b):
     penColor(255, 255, 255)
     brushColor(255, 255, 255)
     ellipse(15, 12, a + 49, b - 88)
+<<<<<<< HEAD
 
 brushColor(80,230,230)
 rectangle(0, 0, 1000, 250)
 brushColor(0,128,85)
+=======
+
+
+brushColor(80, 230, 230)
+rectangle(0, 0, 1000, 250)
+brushColor(0, 128, 85)
+>>>>>>> 749fe181cb440d0c04df4e34acf3c0f77f68ba70
 rectangle(0, 250, 1000, 600)
 man(200, 200)
 woman(360, 200)
@@ -112,4 +124,8 @@ ice_cream(852, 340)
 penColor(0, 0, 0)
 line(480, 265, 520, 180)
 ice_cream(520, 180)
+<<<<<<< HEAD
 run()
+=======
+run()
+>>>>>>> 749fe181cb440d0c04df4e34acf3c0f77f68ba70

@@ -1,5 +1,10 @@
-from graph import *
-def ellipse( a, b, x0, y0):
+from graph import windowSize, canvasSize, polygon, brushColor, rectangle, penColor, circle, line, run
+
+windowSize(600, 600)
+canvasSize(600, 600)
+
+
+def ellipse(a, b, x0, y0):
     x = a
     y = 0
     s = [(x0 + a, y0)]
@@ -12,52 +17,76 @@ def ellipse( a, b, x0, y0):
         y = -(((1 - x ** 2 / (a ** 2)) * b ** 2) ** 0.5)
         s.append((x + x0, y + y0))
     polygon(s)
-brushColor(80,230,230)
-rectangle(0, 0, 600, 300)
-brushColor(0,128,85)
-rectangle(0,300, 600, 800)
-penColor(233,99,233)
-brushColor(233,99,233)
-polygon([(350,210),(425,400),(275,400),(350,210)])
-penColor(133,133,133)
-brushColor(133,133,133)
-ellipse( 50, 95, 150, 305)
-penColor(255,255,255)
-brushColor(255,255,255)
-circle(150,180,50)
-circle(350,180,50)
-penSize(1)
-penColor(0,0,0)
-line(375, 400, 375, 500)
-line(375, 500, 390, 505)
-line(325, 400, 325, 500)
-line(325, 500, 310, 500)
-line(360,240,425,320)
-line(425,320,465,260)
-line(467,271,480,115)
-penColor(255,0,0)
-brushColor(255,0,0)
-polygon([(480,115),(500,50),(465,45),(480,115)])
-circle(490,50,10)
-circle(475,47,10)
-penColor(0,0,0)
-line(340,240,275,320)
-line(276,321,180,250)
-line(110,250,70,360)
-line(160,390,190,500)
-line(190,500,220,500)
-line(140,390,110,500)
-line(110,500,85,505)
-penColor(255,215,0)
-brushColor(255,215,0)
-polygon([(77,370),(57,270),(19,305),(77,370)])
-penColor(139,69,19)
-brushColor(139,69,19)
-ellipse(14,10,30,302)
-penColor(255,0,0)
-brushColor(255,0,0)
-ellipse(14,12,42,280)
-penColor(255,255,255)
-brushColor(255,255,255)
-ellipse(15,12,28,282)
+
+
+def man(a, b):
+    penColor(133, 133, 133)
+    brushColor(133, 133, 133)
+    ellipse(50, 95, a, b + 120)
+    penColor(229, 194, 152)
+    brushColor(229, 194, 152)
+    circle(a, b, 45)
+    penColor(0, 0, 0)
+# отрисовывает руки : первая строка - правую, а вторая строка - левую;
+    line(a + 40, b + 60, a + 80, b + 140)
+    line(a - 40, b + 60, a - 90, b + 140)
+
+# отрисовывает ноги : первые две строки - правую, а вторые две строки - левую;
+    line(a + 25, b + 200, a + 45, b + 330)
+    line(a + 45, b + 330, a + 65, b + 330)
+    line(a - 25, b + 200, a - 65, b + 330)
+    line(a - 65, b + 330, a - 100, b + 330)
+
+
+def ice_cream(a, b):
+    penColor(255, 215, 0)
+    brushColor(255, 215, 0)
+    polygon([(a, b), (a - 20, b - 100), (a - 58, b - 65), (a, b)])
+    penColor(139, 69, 19)
+    brushColor(139, 69, 19)
+    ellipse(14, 10, a - 47, b - 70)
+    penColor(255, 0, 0)
+    brushColor(255, 0, 0)
+    ellipse(14, 12, a - 32, b - 95)
+    penColor(255, 255, 255)
+    brushColor(255, 255, 255)
+    ellipse(15, 12, a - 49, b - 88)
+
+
+def heart(a, b):
+    line(a, b, a + 20, b - 80)
+    penColor(255, 0, 0)
+    brushColor(255, 0, 0)
+    polygon([(a + 20, b - 80), (a + 7, b - 140), (a + 62, b - 120), (a + 20, b - 80)])
+    circle(a + 25, b - 135, 18)
+    circle(a + 47, b - 128, 18)
+
+
+def woman(a, b):
+    penColor(233, 99, 233)
+    brushColor(233, 99, 233)
+    polygon([(a, b + 30), (a + 75, b + 220), (a - 75, b + 220), (a, b + 30)])
+    penColor(229, 194, 152)
+    brushColor(229, 194, 152)
+    circle(a, b, 45)
+    penColor(0, 0, 0)
+# отрисовывает ноги : первые две строки - правую, а вторые две строки - левую;
+    line(a + 20, b + 220, a + 20, b + 330)
+    line(a + 20, b + 330, a + 40, b + 330)
+    line(a - 20, b + 220, a - 20, b + 330)
+    line(a - 20, b + 330, a - 40, b + 330)
+# отрисовывает руки : первая строка - правую, а вторая строка - левую;
+    line(a + 12, b + 60, a + 50, b + 100)
+    line(a + 50, b + 100, a + 120, b + 65)
+    line(a - 12, b + 60, a - 82, b + 140)
+
+
+brushColor(80, 230, 230)
+rectangle(0, 0, 600, 250)
+brushColor(0, 128, 85)
+rectangle(0, 250, 600, 600)
+man(200, 200)
+woman(360, 200)
+heart(410, 400)
+ice_cream(110, 340)
 run()
