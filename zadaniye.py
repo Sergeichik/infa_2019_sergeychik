@@ -33,8 +33,8 @@ def sort(m):
 def rotate(square, angle):
     sqnew = [[0, 0], [0, 0],  [0, 0],  [0, 0]]
     for i in range(4): 
-        sqnew[i][0] = square[i][0]*cos(angle) - square[i][1]*sin(angle)
-        sqnew[i][1] = square[i][0]*sin(angle) - square[i][1]*cos(angle)
+        sqnew[i][0] = (square[i][0] - ((square[0][0] + square[2][0])/2))*cos(angle) - (square[i][1] - ((square[0][1] + square[2][1])/2))*sin(angle)
+        sqnew[i][1] = (square[i][0] - ((square[0][0] + square[2][0])/2))*sin(angle) + (square[i][1] - ((square[0][1] + square[2][1])/2))*cos(angle)
         sqnew[i] = tuple(sqnew[i])
     print(sqnew)
 
