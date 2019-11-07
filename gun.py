@@ -40,7 +40,9 @@ class ball():
         )
 
     def move(self):
-#Перемещение мяча
+        
+# Перемещение мяча
+
         self.xbound = 700
         self.ybound = 510
         if self. live <= 0:
@@ -59,7 +61,9 @@ class ball():
             self.vx -= self.vx*0.15
 
     def hittest(self, obj):
-#Проверка столкновения. Возвращает True, если столкновение произошло
+        
+# Проверка столкновения. Возвращает True, если столкновение произошло
+
         if math.sqrt((self.x - obj.x)**2 + (self.y - obj.y)**2) < (self.r + obj.r):
             canv.delete(obj.id)
             obj.live = 0
@@ -95,7 +99,9 @@ class gun():
         launched = True
 
     def targetting(self, event=0):
-#прицеливание
+        
+# прицеливание
+
         if event:
             self.an = math.atan((event.y-450) / (event.x-20))
         if self.f2_on:
@@ -118,7 +124,7 @@ class gun():
 
 
 class target():
-    def some_errorish_shit(self):
+    def error(self):
         self.live = 1
         self.id = canv.create_oval(0, 0, 0, 0)
         self.new_target()
@@ -142,12 +148,14 @@ class target():
         canv.itemconfig(self.id, fill=color)
 
     def hit(self, points=1):
+        
 #поражение цели шариком
+
         canv.coords(self.id, -10, -10, -10, -10)
         self.points += points
-        canv.itemconfig(self.id_points, text=self.points)
+        canv.itemconfig(self.id_points, text = self.points)
 
-    def sub_hit(self, points=1):
+    def sub_hit(self, points = 1):
         self.points +=points
 
     def set_coords(self):
@@ -194,8 +202,8 @@ balls = []
 def new_game(event=''):
     global gun, t1, screen1, balls, bullet, g1, b, t2
     canv.itemconfig(screen1, text='')
-    t1.some_errorish_shit()
-    t2.some_errorish_shit()
+    t1.error()
+    t2.error()
     t2.points = 0
     bullet = 0
     balls = []
@@ -203,7 +211,6 @@ def new_game(event=''):
     canv.bind('<Button-1>', g1.fire2_start)
     canv.bind('<ButtonRelease-1>', g1.fire2_end)
     canv.bind('<Motion>', g1.targetting)
-    z = 0.03
     t1.live = 1
     t2.live = 1
     restart = False
@@ -237,4 +244,3 @@ def new_game(event=''):
 new_game()
 
 canv.mainloop()
-
