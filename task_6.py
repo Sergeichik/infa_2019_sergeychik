@@ -104,6 +104,7 @@ class Ball:
         if math.fabs(self.vel.y) > 5:
             self.airres.y = -1 * k * (self.vel.y) * math.fabs(self.vel.y)
 
+
 def rfdelete(list):
     for i in range(len(list)):
         for g in range(len(list)):
@@ -112,6 +113,7 @@ def rfdelete(list):
     for k in range(len(list)):
         list[k].zerorf()
 
+        
 def cleart(list):
     for i in range(len(list)):
         list[i].t = 0
@@ -126,6 +128,7 @@ def reflector(list):
     for i in range(len(list)):
         list[i].reflection()
 
+        
 def air(list, k):
     for i in range(len(list)):
         list[i].airresistance(k)
@@ -136,6 +139,7 @@ def collider(list):
         for g in range(len(list)):
             if i != g:
                 list[g].collision(list[i])
+
 
 ballpack = [Ball() for i in range(20)]
 
