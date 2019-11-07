@@ -34,7 +34,6 @@ class Vector:
 
 
 class Ball:
-    
     def __init__(self):
         self.pos = Vector(rnd(100, 1200), rnd(100, 600))
         self.vel = Vector(rnd(-10, 10), rnd(-10, 10))
