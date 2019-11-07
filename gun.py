@@ -40,8 +40,8 @@ class ball():
         )
 
     def move(self):
-        
-# Перемещение мяча
+
+# "Перемещение мяча"
 
         self.xbound = 700
         self.ybound = 510
@@ -62,7 +62,7 @@ class ball():
 
     def hittest(self, obj):
         
-# Проверка столкновения. Возвращает True, если столкновение произошло
+# "Проверка столкновения. Возвращает True, если столкновение произошло"
 
         if math.sqrt((self.x - obj.x)**2 + (self.y - obj.y)**2) < (self.r + obj.r):
             canv.delete(obj.id)
@@ -100,7 +100,7 @@ class gun():
 
     def targetting(self, event=0):
         
-# прицеливание
+# "прицеливание"
 
         if event:
             self.an = math.atan((event.y-450) / (event.x-20))
@@ -149,14 +149,14 @@ class target():
 
     def hit(self, points=1):
         
-#поражение цели шариком
+# "поражение цели шариком"
 
         canv.coords(self.id, -10, -10, -10, -10)
         self.points += points
-        canv.itemconfig(self.id_points, text = self.points)
+        canv.itemconfig(self.id_points, text=self.points)
 
-    def sub_hit(self, points = 1):
-        self.points +=points
+    def sub_hit(self, points=1):
+        self.points += points
 
     def set_coords(self):
         canv.coords(
@@ -213,7 +213,6 @@ def new_game(event=''):
     canv.bind('<Motion>', g1.targetting)
     t1.live = 1
     t2.live = 1
-    restart = False
     while t1.live or t2.live:
         for b in balls:
             b.move()
@@ -222,7 +221,6 @@ def new_game(event=''):
             b.hittest(t1)
             b.hittest(t2)
             if not t1.live and not t2.live:
-                restart = True
                 t1.live = 0
                 t1.hit()
                 t2.live = 0
