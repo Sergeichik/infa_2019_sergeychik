@@ -1,7 +1,6 @@
 from random import randrange as rnd, choice
 import tkinter as tk
 import math
-import time
 
 root = tk.Tk()
 root.geometry('1280x720')
