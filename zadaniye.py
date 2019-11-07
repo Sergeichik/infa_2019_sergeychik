@@ -10,11 +10,7 @@ def prime(a):
         for j in range(counter):
             if (i + 3) % lst[j] == 0:
                 is_prime = False
-        if q:
-            lst.append(i + 3)
-            counter += 1
-        else:
-            is_prime = True
+       
     return lst
 
 
@@ -23,7 +19,7 @@ def sort(lst):
     min_index = 0
     for i in range(len(lst)):
         for j in range(len(lst) - i):
-            if lst[j + i] < m[min_index]:
+            if lst[j + i] < [min_index]:
                 min_index = j + i
         lst[i], lst[min_index] = lst[min_index], lst[i]
         min_index = i + 1
