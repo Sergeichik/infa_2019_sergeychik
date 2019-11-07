@@ -11,7 +11,7 @@ c.pack(fill=tk.BOTH, expand=1)
 colors = ['black', 'pink']
 
 
-class Vector: 
+class Vector:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -69,7 +69,7 @@ class Ball:
         else:
             self.acc.y = 0
 
-    def collision(self, ball): 
+    def collision(self, ball):
         if ((self.pos.x - ball.pos.x) ** 2 + (self.pos.y - ball.pos.y) ** 2) ** (1 / 2) < (self.r + ball.r):
             r = self.r + ball.r - (((self.pos.x - ball.pos.x) ** 2 + (self.pos.y - ball.pos.y) ** 2) ** (1 / 2))
             sin = math.fabs((self.pos.x - ball.pos.x) / (
@@ -98,13 +98,11 @@ class Ball:
             self.rf.x = 0
             self.rf.y = 0
 
-    def airresistance(self, k): 
+    def airresistance(self, k):
         if math.fabs(self.vel.x) > 5:
             self.airres.x = -1 * k * (self.vel.x) * math.fabs(self.vel.x)
         if math.fabs(self.vel.y) > 5:
             self.airres.y = -1 * k * (self.vel.y) * math.fabs(self.vel.y)
-
-
 
 def rfdelete(list):
     for i in range(len(list)):
