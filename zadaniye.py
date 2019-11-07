@@ -8,9 +8,9 @@ def primenum(a):
     q = True
     for i in range(a):
         for k in range(n):
-            if (i + 3) %l[k] == 0:
+            if (i + 3) % l[k] == 0:
                 q = False
-       	if q == True:
+       	if q =True:
             l.append(i + 3)
             n = n + 1     
         else:
