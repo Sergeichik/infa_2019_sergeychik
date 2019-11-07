@@ -112,7 +112,6 @@ def rfdelete(list):
     for k in range(len(list)):
         list[k].zerorf()
 
-
 def cleart(list):
     for i in range(len(list)):
         list[i].t = 0
@@ -138,12 +137,10 @@ def collider(list):
             if i != g:
                 list[g].collision(list[i])
 
-
-
 ballpack = [Ball() for i in range(20)]
 
 
-def update():  #Time function
+def update():
     reflector(ballpack)
     air(ballpack, 0.0003)
     collider(ballpack)
