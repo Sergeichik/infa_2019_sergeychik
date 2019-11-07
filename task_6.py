@@ -1,15 +1,15 @@
-from tkinter import *
-from random import randrange as rnd, choice  # Needs to random
+from random import randrange as rnd, choice
+import tkinter as tk
 import math
 import time
 
-root = Tk()
+root = tk.Tk()
 root.geometry('1280x720')
 
-c = Canvas(root, bg='white')
-c.pack(fill=BOTH, expand=1)
+c = tk.Canvas(root, bg='white')
+c.pack(fill=tk.BOTH, expand=1)
 
-colors = ['black', 'pink']  # Color module
+colors = ['black', 'pink']
 
 
 class Vector: 
@@ -158,4 +158,4 @@ def update():  #Time function
 
 
 update()
-mainloop()
+tk.mainloop()
