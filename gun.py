@@ -41,7 +41,7 @@ class ball():
 
     def move(self):
 
-# "Перемещение мяча"
+# ab
 
         self.xbound = 700
         self.ybound = 510
