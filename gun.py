@@ -11,6 +11,7 @@ root.geometry('800x600')
 canv = tk.Canvas(root, bg='white')
 canv.pack(fill=tk.BOTH, expand=1)
 
+
 class ball():
     def __init__(self, x=40, y=450):
 
