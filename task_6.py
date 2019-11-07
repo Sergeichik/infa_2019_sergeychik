@@ -12,7 +12,7 @@ c.pack(fill=BOTH, expand=1)
 colors = ['black', 'pink']  # Color module
 
 
-class Vector:  # Class vector, needed to make my fcking life easier
+class Vector: 
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -34,16 +34,7 @@ class Vector:  # Class vector, needed to make my fcking life easier
         self.y = c * self.y
 
 
-class Ball:  # Class ball, move, acceleration, reflection are included. POS-X and Y-needs to seek POSition of the >
-    # < ball and make some math.
-    # VEL - VELocity, X and Y components are included, needs to seek VELocity and track the ball
-    # ACC - ACCeleration, X and Y components are included, needs for collisions with ONLY WALLS(!)
-    # RF - acceleration, X and Y components are included, need for ONLY BALL-BALL COLLISIONS(!)
-    # R - Radius, needs to create ball, and for math
-    # T - internal variable, need to BALL-BALL COLLISION math
-    # OBJ - object that you see, made of POS and R, color is random
-    # AIRRES - AIRRESistance, needs to limit velocity
-    # G - gravity
+class Ball:
     def __init__(self):
         self.pos = Vector(rnd(100, 1200), rnd(100, 600))
         self.vel = Vector(rnd(-10, 10), rnd(-10, 10))
@@ -57,7 +48,7 @@ class Ball:  # Class ball, move, acceleration, reflection are included. POS-X an
                                  self.pos.y + self.r,
                                  fill=choice(colors), width=0)
 
-    def move(self):  # Move with acceleration, works
+    def move(self):
         self.vel += self.acc
         self.vel += self.rf
         self.vel += self.airres
@@ -65,7 +56,7 @@ class Ball:  # Class ball, move, acceleration, reflection are included. POS-X an
         self.pos += self.vel
         c.move(self.obj, self.vel.x, self.vel.y)
 
-    def reflection(self):  # Wall collision, uses acceleration, not impulses, works
+    def reflection(self):
         if self.pos.x < self.r:
             self.acc.x = self.r - self.pos.x
         elif self.pos.x > 1280 - self.r:
@@ -79,7 +70,7 @@ class Ball:  # Class ball, move, acceleration, reflection are included. POS-X an
         else:
             self.acc.y = 0
 
-    def collision(self, ball):  # collision module, uses acceleration, affect to 1st and 2nd ball(!), works
+    def collision(self, ball): 
         if ((self.pos.x - ball.pos.x) ** 2 + (self.pos.y - ball.pos.y) ** 2) ** (1 / 2) < (self.r + ball.r):
             r = self.r + ball.r - (((self.pos.x - ball.pos.x) ** 2 + (self.pos.y - ball.pos.y) ** 2) ** (1 / 2))
             sin = math.fabs((self.pos.x - ball.pos.x) / (
@@ -99,16 +90,16 @@ class Ball:  # Class ball, move, acceleration, reflection are included. POS-X an
                 self.rf.y = - r * cos
                 ball.rf.y = r * cos
 
-    def check(self, ball):  # add function, check if balls collide, add t +=1
+    def check(self, ball):
         if ((self.pos.x - ball.pos.x) ** 2 + (self.pos.y - ball.pos.y) ** 2) ** (1 / 2) < (self.r + ball.r):
             self.t += 1
 
-    def zerorf(self):  # add function, resets Racceleration to zero if t = 0 (noone ball are near this ball)
+    def zerorf(self):
         if self.t == 0:
             self.rf.x = 0
             self.rf.y = 0
 
-    def airresistance(self, k): # airresistance mosule, limits velocity
+    def airresistance(self, k): 
         if math.fabs(self.vel.x) > 5:
             self.airres.x = -1 * k * (self.vel.x) * math.fabs(self.vel.x)
         if math.fabs(self.vel.y) > 5:
@@ -116,7 +107,7 @@ class Ball:  # Class ball, move, acceleration, reflection are included. POS-X an
 
 
 
-def rfdelete(list):  # check function, needs to seek Racceleration cause it complicated, uses *zerorf and *check(!)
+def rfdelete(list):
     for i in range(len(list)):
         for g in range(len(list)):
             if i != g:
@@ -125,26 +116,26 @@ def rfdelete(list):  # check function, needs to seek Racceleration cause it comp
         list[k].zerorf()
 
 
-def cleart(list): #add function, needs to clear t after collisions
+def cleart(list):
     for i in range(len(list)):
         list[i].t = 0
 
 
-def mover(list):    #add fuction, includes move() of the ALL balls in the list
+def mover(list):
     for i in range(len(list)):
         list[i].move()
 
 
-def reflector(list):    #add function, includes reflection() of the ALL balls in the list
+def reflector(list):
     for i in range(len(list)):
         list[i].reflection()
 
-def air(list, k):  #add function, includes airresistance() of the ALL balls in the list
+def air(list, k):
     for i in range(len(list)):
         list[i].airresistance(k)
 
 
-def collider(list): #add function, includes collision() of the ALL ball-ball in the list
+def collider(list):
     for i in range(len(list)):
         for g in range(len(list)):
             if i != g:
