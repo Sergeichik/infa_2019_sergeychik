@@ -113,7 +113,7 @@ def rfdelete(list):
     for k in range(len(list)):
         list[k].zerorf()
 
-        
+     
 def cleart(list):
     for i in range(len(list)):
         list[i].t = 0
@@ -128,7 +128,7 @@ def reflector(list):
     for i in range(len(list)):
         list[i].reflection()
 
-        
+  
 def air(list, k):
     for i in range(len(list)):
         list[i].airresistance(k)
