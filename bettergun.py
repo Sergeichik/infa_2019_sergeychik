@@ -65,11 +65,12 @@ class ball():
             c = gr1.coords[i - 1][1] - gr1.coords[i][1]
             d = gr1.coords[i][0] - gr1.coords[i - 1][0]
             e = gr1.coords[i - 1][0] * gr1.coords[i][1] - gr1.coords[i][0] * gr1.coords[i - 1][1]
-            if ((abs(c*self.x + d*self.y + e) / math.sqrt(c*c + d*d)) < self.r) and (c*(self.y - gr1.coords[i - 1][1]) - d*(self.x - gr1.coords[i - 1][0]))*(c*(self.y - gr1.coords[i][1]) - d*(self.x - gr1.coords[i][0])) < 0:
-                self.x -= 2*self.vx
-                self.y -= 2*self.vy
-                self.vx = self.vx * math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
-                self.vy = self.vx * math.sin(2 * math.atan(k1) - 180) + self.vy * math.sin(2 * math.atan(k1) - 90)
+            if ((abs(c*self.x + d*self.y + e) / math.sqrt(c*c + d*d)) < self.r):
+                if(c*(self.y - gr1.coords[i - 1][1]) - d*(self.x - gr1.coords[i - 1][0]))*(c*(self.y - gr1.coords[i][1]) - d*(self.x - gr1.coords[i][0])) < 0:
+                    self.x -= 2*self.vx
+                    self.y -= 2*self.vy
+                    self.vx = self.vx * math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
+                    self.vy = self.vx * math.sin(2 * math.atan(k1) - 180) + self.vy * math.sin(2 * math.atan(k1) - 90)
 
 
 #        if self.x > self.xbound:
@@ -265,7 +266,6 @@ def new_game(event=''):
     canv.bind('<Motion>', g1.targetting)
     t1.live = 1
     t2.live = 1
-    restart = False
     while t1.live or t2.live:
         for b in balls:
             b.move()
