@@ -70,14 +70,14 @@ class ball():
                     if (c*(self.y - gr1.coords[i][1]) - d*(self.x - gr1.coords[i][0])) > 0:
                         self.x -= 2*self.vx
                         self.y -= 2*self.vy
-                        self.vx = self.vx * math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
-                        self.vy = self.vx * math.sin(2 * math.atan(k1) - 180) + self.vy * math.sin(2 * math.atan(k1) - 90)
+                        self.vx = self.vx*math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
+                        self.vy = self.vx*math.sin(2 * math.atan(k1) - 180) + self.vy * math.sin(2 * math.atan(k1) - 90)
                 if (c*(self.y - gr1.coords[i - 1][1]) - d*(self.x - gr1.coords[i - 1][0])) > 0:
                     if (c*(self.y - gr1.coords[i][1]) - d*(self.x - gr1.coords[i][0])) < 0:
                         self.x -= 2*self.vx
                         self.y -= 2*self.vy
-                        self.vx = self.vx * math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
-                        self.vy = self.vx * math.sin(2 * math.atan(k1) - 180) + self.vy * math.sin(2 * math.atan(k1) - 90)
+                        self.vx = self.vx*math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
+                        self.vy = self.vx*math.sin(2 * math.atan(k1) - 180) + self.vy * math.sin(2 * math.atan(k1) - 90)
 
 
 
