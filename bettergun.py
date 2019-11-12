@@ -79,8 +79,6 @@ class ball():
                         self.vx = self.vx*math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
                         self.vy = self.vx*math.sin(2 * math.atan(k1) - 180) + self.vy * math.sin(2 * math.atan(k1) - 90)
 
-
-
 #        if self.x > self.xbound:
 #            self.x -= self.vx
 #            self.vx = -self.vx/2.5
@@ -88,8 +86,6 @@ class ball():
 #            self.y -= self.vy
 #            self.vy = -self.vy/2.5
 #            self.vx -= self.vx*0.15
-
-
 
     def hittest(self, obj):
         if math.sqrt((self.x - obj.x)**2 + (self.y - obj.y)**2) < (self.r + obj.r):
