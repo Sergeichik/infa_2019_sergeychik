@@ -62,10 +62,10 @@ class ball():
             if k == 0:
                 k = 0.0001
             k1 = -1 / k
-            c    = gr1.coords[i - 1][1] - gr1.coords[i][1]
+            c = gr1.coords[i - 1][1] - gr1.coords[i][1]
             d = gr1.coords[i][0] - gr1.coords[i - 1][0]
             e = gr1.coords[i - 1][0] * gr1.coords[i][1] - gr1.coords[i][0] * gr1.coords[i - 1][1]
-            if ((abs(c*self.x + d*self.y + e)/ math.sqrt(c*c + d*d)) < self.r) and (c*(self.y - gr1.coords[i - 1][1]) - d*(self.x - gr1.coords[i - 1][0]))*(c*(self.y - gr1.coords[i][1]) - d*(self.x - gr1.coords[i][0])) < 0:
+            if ((abs(c*self.x + d*self.y + e) / math.sqrt(c*c + d*d)) < self.r) and (c*(self.y - gr1.coords[i - 1][1]) - d*(self.x - gr1.coords[i - 1][0]))*(c*(self.y - gr1.coords[i][1]) - d*(self.x - gr1.coords[i][0])) < 0:
                 self.x -= 2*self.vx
                 self.y -= 2*self.vy
                 self.vx = self.vx * math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
@@ -79,6 +79,8 @@ class ball():
 #            self.y -= self.vy
 #            self.vy = -self.vy/2.5
 #            self.vx -= self.vx*0.15
+
+
 
     def hittest(self, obj):
         if math.sqrt((self.x - obj.x)**2 + (self.y - obj.y)**2) < (self.r + obj.r):
@@ -167,7 +169,7 @@ class target():
         canv.itemconfig(self.id_points, text=self.points)
 
     def sub_hit(self, points=1):
-        self.points +=points
+        self.points += points
 
     def set_coords(self):
         canv.coords(
@@ -206,23 +208,29 @@ class ground():
         self.coords = []
         self.id = []
         self.end = True
+
     def draw_start(self, event):
         self.on = True
+
     def draw_finish(self, event):
         self.on = False
         self.finish = True
         self.really_draw()
+
     def draw(self, event):
         if self.on is True:
             self.coords.append((event.x, event.y))
         else:
             self.finish = True
+
     def really_draw(self):
         print(len(self.coords))
         for i in range(1, len(self.coords)):
             self.id.append(canv.create_line(self.coords[i-1][0], self.coords[i-1][1], self.coords[i][0], self.coords[i][1]))
         self.end = False
         new_game()
+
+
 gr1 = ground()
 t1 = target()
 t2 = target()
@@ -242,15 +250,10 @@ def ground_draw():
     canv.bind('<ButtonRelease-1>', gr1.draw_finish)
     canv.bind('<Motion>', gr1.draw)
 
+
 def new_game(event=''):
     global gun, t1, screen1, balls, bullet, g1, b, t2, gr1
     canv.itemconfig(screen1, text='')
-
-
-
-
-
-
     t1.error()
     t2.error()
     t2.points = 0
@@ -260,7 +263,6 @@ def new_game(event=''):
     canv.bind('<Button-1>', g1.fire2_start)
     canv.bind('<ButtonRelease-1>', g1.fire2_end)
     canv.bind('<Motion>', g1.targetting)
-    z = 0.03
     t1.live = 1
     t2.live = 1
     restart = False
@@ -272,7 +274,6 @@ def new_game(event=''):
             b.hittest(t1)
             b.hittest(t2)
             if not t1.live and not t2.live:
-                restart = True
                 t1.live = 0
                 t1.hit()
                 t2.live = 0
