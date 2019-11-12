@@ -1,73 +1,66 @@
 from math import sin, cos, pi
 
 
-def primenum(a):
-    l = []
-    l.append(2)
-    n = 0
-    q = True
+# Makes a list of all prime numbers that a not more than a
+def prime(a):
+    lst = [2]
+    counter = 0
+    is_prime = True
     for i in range(a):
-        for k in range(n):
-            if (i + 3) %l[k] == 0:
-                q = False
-       	if q == True:
-            l.append(i + 3)
-            n = n + 1     
-        else:
-            q = True         
-    print(l)
-    return(l)
+        for j in range(counter):
+            if (i + 3) % lst[j] == 0:
+     return lst
 
 
-def sort(m):
-    q = 0
-    for i in range (len(m)):
-        for k in range(len(m) - i):
-            if m[i + k] < m[q]:
-                q = k + i
-        m[i],m[q] = m[q],m[i]
-        q = i + 1
-    print(m)
-
-    
-def rotate(square, angle):
-    sqnew = [[0, 0], [0, 0],  [0, 0],  [0, 0]]
-    for i in range(4): 
-        sqnew[i][0] = square[i][0]*cos(angle) - square[i][1]*sin(angle)
-        sqnew[i][1] = square[i][0]*sin(angle) - square[i][1]*cos(angle)
-        sqnew[i] = tuple(sqnew[i])
-    print(sqnew)
+# Sorting function; "Selection sort" (in - list)
+def sort(lst):
+    min_index = 0
+    for i in range(len(lst)):
+        for j in range(len(lst) - i):
+            if lst[j + i] < [min_index]:
+                min_index = j + i
+        lst[i], lst[min_index] = lst[min_index], lst[i]
+        min_index = i + 1
+    return lst
 
 
-def affordable_goods(good, prise):
-    a = []
-    for key in good:
-        if good[key] < prise:
-            a.append(key)
-    print(a)
+# Prints a list of tuples of coordinates of a turned square based on starting coordinates and angle
+def rotate_square(square, angle):
+    mid_x = 0
+    mid_y = 0
+    square1 = [[0, 0], [0, 0], [0, 0], [0, 0]]
+    for i in range(4):
+        mid_x = mid_x + square[i][0]
+        mid_y = mid_y + square[i][1]
+    for i in range(4):
+        square1[i][0] = (square[i][0] - mid_x/4)*cos(angle) - (square[i][1] - mid_y/4)*sin(angle) + mid_x/4
+        square1[i][1] = (square[i][0] - mid_x/4)*sin(angle) + (square[i][1] - mid_y/4)*cos(angle) + mid_y/4
+        square1[i] = tuple(square1[i])
+    return square1
 
 
-def unique(a):
-    set1 = set(a)
-    print(list(set1))
+# You can buy everything that will be printed (in - set of items {'item' : price}; your money)
+def market(dct, money):
+    lst = []
+    for key in dct:
+        if dct[key] < money:
+            lst.append(key)
+    return lst
 
 
-def difference(a1, a2):
-    q = True
-    a3 = []
-    for i in a1:
-        for j in a2:
-            if i == j:
-                q = False
-        if q:
-            a3.append(i)
-        else:
-            q = True
-    print(list(set(a3)))
+# Removes all the dubles that appear in inserted list
+def no_duble(lst):
+    return list(set(lst))
 
-primenum(1000)
-sort([2, 7, 16, 1, 21])
-rotate(((1 , 1), (1, -1), (-1, -1), (-1, 1)), 0)
-affordable_goods({'banana': 11, 'apple': 5, 'fish': 40}, 30)
-unique([1, 1, 2, 6, 5, 11, 3, 3, 2, 2, 2])
-difference([1, 2, 3, 4], [4, 5, 6])
+
+# Mathematical difference of sets, that are inserted as two lists
+def difference(m1, m2):
+    return (set(m1)).difference(set(m2))
+
+
+print(prime(1000))
+print(sort([6, 4, 2, 5, 35, 3, 34, 25, 0]))
+print(rotate_square(((1, 1), (1, -1), (-1, -1), (-1, 1)), pi))
+print(market({'banana': 11, 'apple': 5, 'steak': 100}, 50))
+print(no_duble([1, 1, 1, 1, 2, 2, 2, 3, 4, 5, 5]))
+print(difference([1, 2, 3, 2], [3, 4]))
