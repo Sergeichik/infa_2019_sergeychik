@@ -231,7 +231,11 @@ class ground():
     def really_draw(self):
         print(len(self.coords))
         for i in range(1, len(self.coords)):
-            self.id.append(canv.create_line(self.coords[i-1][0], self.coords[i-1][1], self.coords[i][0], self.coords[i][1]))
+            self.x = self.coords[i-1][0]
+            self.y = self.coords[i-1][1]
+            self.z = self.coords[i][0]
+            self.a = self.coords[i][1]
+            self.id.append(canv.create_line(self.x, self.y, self.z, self.a))
         self.end = False
         new_game()
 
