@@ -1,296 +1,379 @@
-from random import randrange as rnd, choice
-import tkinter as tk
-import math
-import time
+from random import choice, randint as rnd
 
-# print (dir(math))
+from tkinter import Tk, Canvas, BOTH, mainloop, CENTER, Frame
 
-root = tk.Tk()
-fr = tk.Frame(root)
-root.geometry('800x600')
-canv = tk.Canvas(root, bg='white')
-canv.pack(fill=tk.BOTH, expand=1)
+root = Tk()
+fr = Frame(root)
+root.geometry('730x600')
+canvas = Canvas(root, bg='white')
+canvas.pack(fill=BOTH, expand=1)
+speed = 1
+dT = 10
 
 
-class ball():
-    def __init__(self, x=40, y=450):
-        self.x = x
-        self.y = y
-        self.r = 10
+class Ball:
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+        self.elastic = 0
+        self.g = 0
+        self.live = 0
+        self.r = 0
         self.vx = 0
         self.vy = 0
         self.color = choice(['blue', 'green', 'red', 'brown'])
-        self.id = canv.create_oval(
+        self.id = canvas.create_oval(
                 self.x - self.r,
                 self.y - self.r,
                 self.x + self.r,
                 self.y + self.r,
-                fill=self.color
-        )
-        self.live = 30
-        self.xtbound = []
-        self.ytbound = []
-        for i in range(len(gr1.coords)):
-            if self.x < gr1.coords[i][0]:
-                self.xtbound.append(True)
-            else:
-                self.xtbound.append(False)
-            if self.y < gr1.coords[i][1]:
-                self.ytbound.append(True)
-            else:
-                self.ytbound.append(False)
+                fill=self.color)
 
-    def set_coords(self):
-        canv.coords(
-                self.id,
+    def appear(self, x, y, vx, vy):
+        self.x = x
+        self.y = y
+        self.elastic = 0.6
+        self.g = 0.1
+        self.live = 1000
+        self.r = 10
+        self.vx = vx
+        self.vy = vy
+        self.color = choice(['blue', 'green', 'red', 'brown'])
+        self.id = canvas.create_oval(
                 self.x - self.r,
                 self.y - self.r,
                 self.x + self.r,
-                self.y + self.r
-        )
+                self.y + self.r,
+                fill=self.color)
 
-    def move(self):
-        if self. live <= 0:
-            canv.delete(self.id)
-        else:
-            self.vy += 9.81/10
-            self.x += self.vx
+    def move(self, fild):
+        canvas.delete(self.id)
+
+        self.vy -= self.g
+        min_range_1 = self.r
+        min_range_2 = self.r
+        min_index_1 = -1
+        min_index_2 = -1
+
+        for point in fild:
+            x = point[0]
+            y = point[1]
+            dx = x - self.x
+            dy = y - self.y
+
+            if dx ** 2 + dy ** 2 < min_range_1 ** 2:
+                min_range_2 = min_range_1
+                min_range_1 = (dx ** 2 + dy ** 2) ** 0.5
+                min_index_2 = min_index_1
+                min_index_1 = fild.index(point)
+            elif dx ** 2 + dy ** 2 < min_range_2 ** 2:
+                min_range_2 = (dx ** 2 + dy ** 2) ** 0.5
+                min_index_2 = fild.index(point)
+
+        if min_index_1 != -1 and min_index_2 != -1:
+            min_numb = min(min_index_1, min_index_2)
+            max_numb = max(min_index_1, min_index_2)
+            y1 = fild[min_numb][1]
+            y2 = fild[max_numb][1]
+            x1 = fild[min_numb][0]
+            x2 = fild[max_numb][0]
+
+            if x2 - x1 == 0:
+                cos_a = 0
+            else:
+                cos_a = (x2 - x1) / ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
+            if y2 - y1 == 0:
+                sin_a = 0
+            else:
+                sin_a = -(y2 - y1) / ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
+            self.vy += self.g
             self.y += self.vy
-            self.set_coords()
-        for i in range(1, len(gr1.coords)):
-            k = (gr1.coords[i][1] - gr1.coords[i - 1][1]) / (gr1.coords[i][0] - gr1.coords[i - 1][1])
-            if k == 0:
-                k = 0.0001
-            k1 = -1 / k
-            c    = gr1.coords[i - 1][1] - gr1.coords[i][1]
-            d = gr1.coords[i][0] - gr1.coords[i - 1][0]
-            e = gr1.coords[i - 1][0] * gr1.coords[i][1] - gr1.coords[i][0] * gr1.coords[i - 1][1]
-            if ((abs(c*self.x + d*self.y + e)/ math.sqrt(c*c + d*d)) < self.r) and (c*(self.y - gr1.coords[i - 1][1]) - d*(self.x - gr1.coords[i - 1][0]))*(c*(self.y - gr1.coords[i][1]) - d*(self.x - gr1.coords[i][0])) < 0:
-                self.x -= 2*self.vx
-                self.y -= 2*self.vy
-                self.vx = self.vx * math.cos(2 * math.atan(k1) - 180) + self.vy * math.cos(2 * math.atan(k1) - 90)
-                self.vy = self.vx * math.sin(2 * math.atan(k1) - 180) + self.vy * math.sin(2 * math.atan(k1) - 90)
+            self.x -= self.vx
+            self.vy *= self.elastic
+            self.vx *= self.elastic
+            instant_vx = self.vx
+            self.vx = self.vx * cos_a + self.vy * sin_a
+            self.vy = -instant_vx * sin_a + self.vy * cos_a
+            self.vy *= -1
+            self.vx = self.vx * cos_a - self.vy * sin_a
+            self.vy = instant_vx * sin_a + self.vy * cos_a
 
+        self.y -= self.vy
+        self.x += self.vx
 
-#        if self.x > self.xbound:
-#            self.x -= self.vx
-#            self.vx = -self.vx/2.5
-#        if self.y > self.ybound:
-#            self.y -= self.vy
-#            self.vy = -self.vy/2.5
-#            self.vx -= self.vx*0.15
-
-    def hittest(self, obj):
-        if math.sqrt((self.x - obj.x)**2 + (self.y - obj.y)**2) < (self.r + obj.r):
-            canv.delete(obj.id)
-            obj.live = 0
-            return True
+        if self.live <= 0:
+            canvas.delete(self.id)
         else:
-            return False
+            self.live -= 1
+
+        self.id = canvas.create_oval(
+                self.x - self.r,
+                self.y - self.r,
+                self.x + self.r,
+                self.y + self.r,
+                fill=self.color)
 
 
-class gun():
-    def idle(self, event):
-        pass
+class Gun:
+    def __init__(self, numb):
+        self.energy = 3
+        self.vx = 0
+        self.vy = 0
+        self.numb = numb
+        self.live = 3
+        self.r = 15
+        self.x = rnd(20, 220) + 500 * numb            # work only for 2 players
+        self.y = 0
+        self.len_x = 20
+        self.len_y = 20
+        self.colors = ['blue', 'green', 'red', 'brown']
+        self.body_id = canvas.create_oval(
+                self.x - self.r,
+                self.y - self.r,
+                self.x + self.r,
+                self.y + self.r,
+                fill=self.colors[self.numb])
 
-    def fire2_set(self):
-        self.f2_power = 10
-        self.f2_on = 0
-        self.an = 1
-        self.id = canv.create_line(20, 450, 50, 420, width=7, fill='black')
+        self.gun_id = canvas.create_line(
+                self.x,
+                self.y,
+                self.x + self.len_x,
+                self.y - self.len_y,
+                fill='black',
+                width=7)
 
-    def fire2_start(self, event):
-        self.f2_on = 1
+    def move(self, fild, power, cos_a, sin_a):
+        touch = 0
+        self.x += self.vx
+        self.y += self.vy
 
-    def fire2_end(self, event):
-        global balls, bullet, launched
-        bullet += 1
-        new_ball = ball()
-        new_ball.r += 5
-        self.an = math.atan((event.y-new_ball.y) / (event.x-new_ball.x))
-        new_ball.vx = self.f2_power * math.cos(self.an)
-        new_ball.vy = self.f2_power * math.sin(self.an)
-        balls += [new_ball]
-        self.f2_on = 0
-        self.f2_power = 10
-        launched = True
+        for point in fild:
+            dx = self.x - point[0]
+            dy = self.y - point[1]
 
-    def targetting(self, event=0):
-        if event:
-            self.an = math.atan((event.y-450) / (event.x-20))
-        if self.f2_on:
-            canv.itemconfig(self.id, fill='orange')
+            if dx ** 2 + dy ** 2 < self.r ** 2:
+                touch = 1
+
+        if touch == 0:
+            self.vy += 0.1
         else:
-            canv.itemconfig(self.id, fill='black')
-        canv.coords(self.id, 20, 450,
-                    20 + max(self.f2_power, 20) * math.cos(self.an),
-                    450 + max(self.f2_power, 20) * math.sin(self.an)
-                    )
-        canv.coords(self.id)
+            self.vy = 0
+            self.vx = 0
+
+        self.drowing(power, cos_a, sin_a)
+
+    def move_left(self, event):
+        if self.energy > 0:
+            self.vx -= 2
+            self.vy -= 2
+            self.energy -= 1
+
+    def move_right(self, event):
+        if self.energy > 0:
+            self.vx += 2
+            self.vy -= 2
+            self.energy -= 1
+
+    def move_up(self, event):
+        if self.energy > 0:
+            self.vy -= 2
+            self.energy -= 1
+
+    def move_down(self, event):
+        if self.energy > 0:
+            self.vy += 2
+            self.energy -= 1
+
+    def drowing(self, power, cos_a, sin_a):
+        canvas.delete(self.body_id)
+        canvas.delete(self.gun_id)
+        self.len_x = max(power, 3) * 10 * cos_a
+        self.len_y = -max(power, 3) * 10 * sin_a
+
+        self.body_id = canvas.create_oval(
+                self.x - self.r,
+                self.y - self.r,
+                self.x + self.r,
+                self.y + self.r,
+                fill=self.colors[self.numb])
+
+        if power != 0:
+            self.gun_id = canvas.create_line(
+                    self.x,
+                    self.y,
+                    self.x + self.len_x,
+                    self.y - self.len_y,
+                    fill='orange',
+                    width=7)
+        else:
+            self.gun_id = canvas.create_line(
+                    self.x,
+                    self.y,
+                    self.x + self.len_x,
+                    self.y - self.len_y,
+                    fill='black',
+                    width=7)
+
+
+class Game():
+    def __init__(self):
+        self.start_text = ''
+        self.fild = [[10, 600]]
+        self.is_fild = 0
+        self.is_create = 0
+        self.game_over = 0
+        self.cos_a = 0
+        self.sin_a = 0
+        self.gun = []
+        self.gun_numb = 2
+        self.live_text = []
+        self.turn = 1
+        self.preparation = 0
+
+        for numb in range(self.gun_numb):
+            self.gun.append(Gun(numb))
+            self.live_text.append('')
+
+        self.angle = 0
+        self.power = 0
+        self.balls = []
+
+    def hittest(self):
+        for ball in self.balls:
+            for numb in range(self.gun_numb):
+                dx = ball.x - self.gun[numb].x
+                dy = ball.y - self.gun[numb].y
+                r = ball.r + self.gun[numb].r
+
+                if dx ** 2 + dy ** 2 < r ** 2 and ball.live < 977:
+                    self.gun[numb].live -= 1
+                    canvas.delete(self.live_text[numb])
+                    self.live_text[numb] = canvas.create_text(
+                                10 * (numb + 1),
+                                10,
+                                text=self.gun[numb].live,
+                                justify=CENTER,
+                                font="Verdana 10",
+                                fill=self.gun[numb].colors[numb])
+
+                    if self.gun[numb].live != 0:
+                        canvas.delete(ball.id)
+                        self.balls.pop(self.balls.index(ball))
+                    else:
+                        canvas.delete(self.gun[numb].gun_id)
+                        canvas.delete(self.gun[numb].body_id)
+
+                if self.gun[numb].y > 600:
+                    self.gun[numb].live = 0
+
+    def new_ball(self, event):
+        self.balls.append(Ball())
+        this_ball = self.balls[len(self.balls) - 1]
+        vx = self.power * self.cos_a
+        vy = self.power * self.sin_a
+        a = self.gun_numb
+        this_ball.appear(self.gun[self.turn % a].x, self.gun[self.turn % a].y, vx, -vy)
+        self.power = 0
+        self.preparation = 0
+        self.gun[self.turn % a].energy = 3
+        self.turn += 1
+
+    def shot_prepair(self, event):
+        self.preparation = 1
+
+    def targetting(self, event):
+        a = self.gun_numb
+        dx = event.x - self.gun[self.turn % a].x
+        dy = event.y - self.gun[self.turn % a].y
+
+        if dx == 0:
+            self.cos_a = 0
+        else:
+            self.cos_a = dx / (dx ** 2 + dy ** 2) ** 0.5
+
+        if dy == 0:
+            self.sin_a = 0
+        else:
+            self.sin_a = dy / (dx ** 2 + dy ** 2) ** 0.5
+
+    def ball_to_old(self):
+        numb = 0
+
+        while numb < len(self.balls):
+            self.balls[numb].move(self.fild)
+
+            if self.balls[numb].live <= 0:
+                canvas.delete(self.balls[numb].id)
+                self.balls.pop(numb)
+
+            numb += 1
 
     def power_up(self):
-        if self.f2_on:
-            if self.f2_power < 100:
-                self.f2_power += 1
-            canv.itemconfig(self.id, fill='orange')
+        if self.power < 15 and self.preparation == 1:
+            self.power += 0.1
+
+    def create_fild(self, event):
+        if event.x < 10:
+            self.is_fild = 1
+
+        if event.x > 720:
+            self.is_fild = -1
+            self.fild.append([720, 600])
+            canvas.create_polygon(self.fild)
+
+        if self.is_fild == 1:
+            self.fild.append([event.x, event.y])
+
+    def main(self):
+        canvas.delete(self.start_text)
+
+        if self.is_fild != -1:
+            self.start_text = canvas.create_text(
+                        365,
+                        300,
+                        text="для начала битвы, проведите слева направо мышкой",
+                        justify=CENTER,
+                        font="Verdana 14")
+
+            canvas.bind('<Motion>', self.create_fild)
         else:
-            canv.itemconfig(self.id, fill='black')
+            canvas.bind('<Motion>', self.targetting)
 
+            for numb in range(self.gun_numb):
+                self.gun[numb].move(self.fild, self.power, self.cos_a, self.sin_a)
 
-class target():
-    def error(self):
-        self.live = 1
-        self.id = canv.create_oval(0, 0, 0, 0)
-        self.new_target()
-        self.vx = 10 * self.points
-        self.vy = 10 * self.points
+        canvas.bind('<Button-1>', self.shot_prepair)
+        self.power_up()
+        canvas.bind('<ButtonRelease-1>', self.new_ball)
+        canvas.bind('<Up>', self.gun[self.turn % self.gun_numb].move_up)
+        canvas.bind('<Down>', self.gun[self.turn % self.gun_numb].move_down)
+        canvas.bind('<Left>', self.gun[self.turn % self.gun_numb].move_left)
+        canvas.bind('<Right>', self.gun[self.turn % self.gun_numb].move_right)
+        self.ball_to_old()
+        self.gun[self.turn % self.gun_numb].drowing(self.power, self.cos_a, self.sin_a)
+        self.hittest()
 
-    def set_points(self):
-        self.points = 0
+        self.game_over = 0
 
-    def score_table(self):
-        self.id_points = canv.create_text(30, 30, text=self.points, font='28')
-        canv.itemconfig(self.id_points, text=self.points)
-        canv.coords(self.id_points)
+        for numb in range(self.gun_numb):
+            if self.gun[numb].live == 0:
+                self.game_over = 1
+                lost_numb = numb
 
-    def new_target(self):
-        x = self.x = rnd(400, 700)
-        y = self.y = rnd(200, 500)
-        r = self.r = rnd(2, 50)
-        color = self.color = 'red'
-        canv.coords(self.id, x - r, y - r, x + r, y + r)
-        canv.itemconfig(self.id, fill=color)
-
-    def hit(self, points=1):
-        canv.coords(self.id, -10, -10, -10, -10)
-        self.points += points
-        canv.itemconfig(self.id_points, text=self.points)
-
-    def sub_hit(self, points=1):
-        self.points +=points
-
-    def set_coords(self):
-        canv.coords(
-            self.id,
-            self.x - self.r,
-            self.y - self.r,
-            self.x + self.r,
-            self.y + self.r
-        )
-
-    def move(self):
-        self.x1bound = 400
-        self.x2bound = 700
-        self.y1bound = 100
-        self.y2bound = 400
-        if self.live <= 0:
-            canv.delete(self.id)
+        if self.game_over == 0:
+            root.after(dT, self.main)
         else:
-            self.x += self.vx
-            self.y += self.vy
-            self.set_coords()
-        if self.x < self.x1bound or self.x > self.x2bound:
-            self.x -= self.vx
-            self.vx = -self.vx
-            self.set_coords()
-        if self.y < self.y1bound or self.y > self.y2bound:
-            self.y -= self.vy
-            self.vy = -self.vy
-            self.set_coords()
+            canvas.create_text(
+                            365,
+                            300,
+                            text=str(lost_numb + 1)+" player lost",
+                            justify=CENTER,
+                            font="Verdana 30",
+                            fill=self.gun[lost_numb].colors[lost_numb])
 
 
-class ground():
-    def ground_set(self):
-        self.on = False
-        self.finish = False
-        self.coords = []
-        self.id = []
-        self.end = True
-    def draw_start(self, event):
-        self.on = True
-    def draw_finish(self, event):
-        self.on = False
-        self.finish = True
-        self.really_draw()
-    def draw(self, event):
-        if self.on is True:
-            self.coords.append((event.x, event.y))
-        else:
-            self.finish = True
-    def really_draw(self):
-        print(len(self.coords))
-        for i in range(1, len(self.coords)):
-            self.id.append(canv.create_line(self.coords[i-1][0], self.coords[i-1][1], self.coords[i][0], self.coords[i][1]))
-        self.end = False
-        new_game()
-gr1 = ground()
-t1 = target()
-t2 = target()
-t1.set_points()
-t2.set_points()
-t1.score_table()
-screen1 = canv.create_text(400, 300, text='', font='28')
-g1 = gun()
-bullet = 0
-balls = []
-
-
-def ground_draw():
-    global gr1
-    gr1.ground_set()
-    canv.bind('<Button-1>', gr1.draw_start)
-    canv.bind('<ButtonRelease-1>', gr1.draw_finish)
-    canv.bind('<Motion>', gr1.draw)
-
-def new_game(event=''):
-    global gun, t1, screen1, balls, bullet, g1, b, t2, gr1
-    canv.itemconfig(screen1, text='')
-
-
-
-
-
-
-    t1.error()
-    t2.error()
-    t2.points = 0
-    bullet = 0
-    balls = []
-    g1.fire2_set()
-    canv.bind('<Button-1>', g1.fire2_start)
-    canv.bind('<ButtonRelease-1>', g1.fire2_end)
-    canv.bind('<Motion>', g1.targetting)
-    z = 0.03
-    t1.live = 1
-    t2.live = 1
-    restart = False
-    while t1.live or t2.live:
-        for b in balls:
-            b.move()
-            t1.move()
-            t2.move()
-            b.hittest(t1)
-            b.hittest(t2)
-            if not t1.live and not t2.live:
-                restart = True
-                t1.live = 0
-                t1.hit()
-                t2.live = 0
-                t2.sub_hit()
-                canv.bind('<Button-1>', g1.idle)
-                canv.bind('<ButtonRelease-1>', g1.idle)
-                canv.bind('<Motion>', g1.targetting)
-                canv.itemconfig(screen1, text='Вы уничтожили цели за ' + str(bullet) + ' выстрелов')
-        canv.update()
-        time.sleep(0.03)
-        g1.targetting()
-        g1.power_up()
-    canv.delete(g1.id)
-    for i in balls:
-        canv.delete(i.id)
-    root.after(3000, new_game)
-
-
-ground_draw()
-
-canv.mainloop()
+game = Game()
+game.main()
+mainloop()
