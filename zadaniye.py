@@ -13,6 +13,8 @@ def prime(a):
 
 
 # Sorting function; "Selection sort" (in - list)
+
+
 def sort(lst):
     min_index = 0
     for i in range(len(lst)):
@@ -25,6 +27,8 @@ def sort(lst):
 
 
 # Prints a list of tuples of coordinates of a turned square based on starting coordinates and angle
+
+
 def rotate_square(square, angle):
     mid_x = 0
     mid_y = 0
@@ -40,6 +44,8 @@ def rotate_square(square, angle):
 
 
 # You can buy everything that will be printed (in - set of items {'item' : price}; your money)
+
+
 def market(dct, money):
     lst = []
     for key in dct:
@@ -49,11 +55,15 @@ def market(dct, money):
 
 
 # Removes all the dubles that appear in inserted list
+
+
 def no_duble(lst):
     return list(set(lst))
 
 
 # Mathematical difference of sets, that are inserted as two lists
+
+
 def difference(m1, m2):
     return (set(m1)).difference(set(m2))
 
