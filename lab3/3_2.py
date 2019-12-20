@@ -99,12 +99,9 @@ def ice_cream(a, b):
     ellipse(15, 12, a + 49, b - 88)
 
 
-
-
 brushColor(80, 230, 230)
 rectangle(0, 0, 1000, 250)
 brushColor(0, 128, 85)
-
 
 
 brushColor(80, 230, 230)
@@ -123,6 +120,3 @@ line(480, 265, 520, 180)
 ice_cream(520, 180)
 
 run()
-
-
-
