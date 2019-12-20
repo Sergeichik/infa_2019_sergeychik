@@ -1,4 +1,4 @@
-from math import sin, cos, pi
+import math
 
 
 # Makes a list of all prime numbers that a not more than a
