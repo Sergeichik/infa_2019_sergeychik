@@ -330,8 +330,12 @@ class BattleField(tk.Canvas):
             self.tag_lower(self.background_grass)
 
     def end_game(self):
-        self.label = tk.Label(text='You survived approximately ' + str(self.wave_counter - 1) + ' waves', width=1000, height=500,
-                              font='Helvetica 54', fg='white', bg='green')
+        self.label = tk.Label(text='You survived approximately ' + str(self.wave_counter - 1) + ' waves',
+                              width=1000,
+                              height=500,
+                              font='Helvetica 54',
+                              fg='white',
+                              bg='green')
         self.label.pack()
 
     def pause(self):
