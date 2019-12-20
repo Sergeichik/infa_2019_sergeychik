@@ -1,5 +1,7 @@
 import math
 # Makes a list of all prime numbers that a not more than a
+
+
 def prime(a):
     lst = [2]
     counter = 0
