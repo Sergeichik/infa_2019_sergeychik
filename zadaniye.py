@@ -9,7 +9,7 @@ def prime(a):
     for i in range(a):
         for j in range(counter):
             if (i + 3) % lst[j] == 0:
-     return lst
+    return lst
 
 
 # Sorting function; "Selection sort" (in - list)
