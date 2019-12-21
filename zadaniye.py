@@ -5,7 +5,6 @@ from math import sin, cos, pi
 def prime(a):
     lst = [2]
     counter = 0
-    is_prime = True
     for i in range(a):
         for j in range(counter):
             if (i + 3) % lst[j] == 0:
